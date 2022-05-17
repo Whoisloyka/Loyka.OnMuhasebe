@@ -2,3 +2,8 @@
 global using Volo.Abp.Domain.Entities.Auditing;
 global using Loyka.OnMuhasebe.Faturalar;
 global using Volo.Abp.Domain.Entities;
+global using System.Collections.Generic;
+global using Loyka.OnMuhasebe.BankaHesaplar;
+global using Loyka.OnMuhasebe.Bankalar;
+global using Loyka.OnMuhasebe.BankaSubeler;
+global using Loyka.OnMuhasebe.OzelKodlar;
