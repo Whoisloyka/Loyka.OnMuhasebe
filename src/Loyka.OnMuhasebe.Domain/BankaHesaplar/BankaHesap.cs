@@ -13,6 +13,13 @@ public class BankaHesap:FullAuditedAggregateRoot<Guid>
     public string Aciklama { get; set; }
     public bool Durum{ get; set; }
 
+
+
+
+
+    public ICollection<MakbuzHareket> MakbuzHareketler { get; set; }
+    public ICollection<Makbuz> Makbuzlar { get; set; }
+
     // Bu dördü de birden çoka türünde ilişkiye sahip.
     // Aşağıdaki yapı "Bir banka hesabının yalnız bir tane şubesi olabilir." anlamına gelmekterdir.
     // Ancak BankaSube.cs'e bakarsak orada ICollection olarak tanımladığımız yapı "Bir şubenin birden fazla hebası olabilir." anlamındadır.

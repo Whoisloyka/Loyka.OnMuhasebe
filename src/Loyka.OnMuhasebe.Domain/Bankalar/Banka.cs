@@ -11,4 +11,8 @@ public class Banka : FullAuditedAggregateRoot<Guid>
 
     public OzelKod OzelKod1 { get; set; }
     public OzelKod OzelKod2 { get; set; }
+
+
+    public ICollection<MakbuzHareket> MakbuzHareketler { get; set; }
+
 }

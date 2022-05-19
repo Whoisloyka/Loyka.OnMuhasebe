@@ -1,4 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Loyka.OnMuhasebe.BankaHesaplar;
+using Loyka.OnMuhasebe.Bankalar;
+using Loyka.OnMuhasebe.BankaSubeler;
+using Loyka.OnMuhasebe.Hizmetler;
+using Loyka.OnMuhasebe.Kasalar;
+using Loyka.OnMuhasebe.Makbuzlar;
+using Loyka.OnMuhasebe.OzelKodlar;
+using Loyka.OnMuhasebe.Parametreler;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -51,12 +59,30 @@ public class OnMuhasebeDbContext :
     public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
     #endregion
+    public DbSet<Banka> Bankalar { get; set; }
+    public DbSet<BankaSube> BankaSubeler { get; set; }
+    public DbSet<BankaHesap> BankaHesaplar { get; set; }
+    public DbSet<Birim> Birimler { get; set; }
+    public DbSet<Cari> Cariler { get; set; }
+    public DbSet<Depo> Depolar { get; set; }
+    public DbSet<Donem> Donemler { get; set; }
+    public DbSet<FirmaParametre> FirmaParametreler { get; set; }
+    public DbSet<Fatura> Faturalar { get; set; }
+    public DbSet<Hizmet> Hizmetler { get; set; }
+    public DbSet<Kasa> Kasalar { get; set; }
+    public DbSet<Makbuz> Makbuzlar { get; set; }
+    public DbSet<Masraf> Masraflar { get; set; }
+    public DbSet<OzelKod> OzelKodlar { get; set; }
+    public DbSet<Stok> Stoklar { get; set; }
+    public DbSet<Sube> Subeler { get; set; }
+
 
     public OnMuhasebeDbContext(DbContextOptions<OnMuhasebeDbContext> options)
         : base(options)
     {
 
     }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

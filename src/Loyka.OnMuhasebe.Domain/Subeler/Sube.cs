@@ -1,4 +1,6 @@
-﻿namespace Loyka.OnMuhasebe.Bankalar;
+﻿
+
+namespace Loyka.OnMuhasebe.Bankalar;
 public class Sube : FullAuditedAggregateRoot<Guid>
 {
     public string Kod { get; set; }
@@ -9,5 +11,8 @@ public class Sube : FullAuditedAggregateRoot<Guid>
 
     public ICollection<BankaHesap> BankaHesaplar { get; set; }
     public ICollection<Depo> Depolar { get; set; }
-
+    public ICollection<Fatura> Faturalar { get; set; }
+    public ICollection<Kasa> Kasalar { get; set; }
+    public ICollection<Makbuz> Makbuzlar { get; set; }
+    public ICollection<FirmaParametre> FirmaParametreler { get; set; }
 }

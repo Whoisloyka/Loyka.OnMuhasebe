@@ -15,5 +15,6 @@ public class BankaSube : FullAuditedAggregateRoot<Guid>
     public OzelKod OzelKod1 { get; set; }
     public OzelKod OzelKod2 { get; set; }
     // Bir BankaSube'nin birden fazla hesabı olabileceği için aşağıdaki şekilde tanımlanmıştır.
+    public ICollection<MakbuzHareket> MakbuzHareketler { get; set; }
     public ICollection<BankaHesap> BankaHesaplar { get; set; }
 }
