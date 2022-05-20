@@ -7,7 +7,7 @@ public class Makbuz : FullAuditedAggregateRoot<Guid>
     public Guid? CariId { get; set; }
     public Guid? KasaId { get; set; }
     public Guid? BankaHesapId { get; set; }
-    public int HareketSayiisi{ get; set; }
+    public int HareketSayisi{ get; set; }
     public decimal CekToplam { get; set; }
     public decimal SenetToplam { get; set; }
     public decimal PosToplam { get; set; }
@@ -25,7 +25,7 @@ public class Makbuz : FullAuditedAggregateRoot<Guid>
 
     public Cari Cari { get; set; }
     public Kasa Kasa { get; set; }
-    public BankaHesap BankaHesapKasa { get; set; }
+    public BankaHesap BankaHesap { get; set; }
     public Sube Sube { get; set; }
     public Donem Donem { get; set; }
     public OzelKod OzelKod1 { get; set; }

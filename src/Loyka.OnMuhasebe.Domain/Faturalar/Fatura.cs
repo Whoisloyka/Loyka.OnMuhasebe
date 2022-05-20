@@ -2,6 +2,7 @@
 public class Fatura : FullAuditedAggregateRoot<Guid>
 {
     public FaturaTuru FaturaTuru { get; set; }
+    public string FaturaNo { get; set; }
     public DateTime Tarih{ get; set; }
     public decimal BrutTutar{ get; set; }
     public decimal IndirimTutar { get; set; }
@@ -26,5 +27,5 @@ public class Fatura : FullAuditedAggregateRoot<Guid>
     public OzelKod OzelKod2 { get; set; }
 
 
-    public ICollection<FaturaHareket> faturaHareketler{ get; set; }
+    public ICollection<FaturaHareket> FaturaHareketler{ get; set; }
 }

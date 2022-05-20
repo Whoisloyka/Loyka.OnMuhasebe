@@ -13,6 +13,7 @@ public class Banka : FullAuditedAggregateRoot<Guid>
     public OzelKod OzelKod2 { get; set; }
 
 
+    public ICollection<BankaSube> BankaSubeler { get; set; }
     public ICollection<MakbuzHareket> MakbuzHareketler { get; set; }
 
 }

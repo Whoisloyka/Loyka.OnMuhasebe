@@ -1,5 +1,5 @@
 ﻿namespace Loyka.OnMuhasebe.Hizmetler;
-public class Hizmet
+public class Hizmet : FullAuditedAggregateRoot<Guid>
 {
     public string Kod { get; set; }
     public string Ad { get; set; }
@@ -15,6 +15,6 @@ public class Hizmet
 
     public Birim Birim { get; set; }
     public OzelKod OzelKod1 { get; set; }
-    public ICollection<FaturaHareket> faturaHareketler{ get; set; }
+    public ICollection<FaturaHareket> FaturaHareketler{ get; set; }
     public OzelKod OzelKod2 { get; set; }
 }
