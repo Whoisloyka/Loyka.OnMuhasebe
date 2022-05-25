@@ -1126,5 +1126,4 @@ public static class OnMuhasebeDbContextModelBuilderExtentions
     //    builder.Entity<GirenCikanBakiye>().HasNoKey();
     //    builder.Entity<OdemeBelgeleriDagilim>().HasNoKey();
     //}
-
 }
