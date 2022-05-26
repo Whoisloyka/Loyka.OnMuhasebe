@@ -96,37 +96,68 @@ public class EFCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
         Expression<Func<TEntity, TKey>> orderBy = null,
         params Expression<Func<TEntity, object>>[] includeProperties)
     {
-        
+        var queryable = await WithDetailsAsync(includeProperties);
+
+        if (predicate != null)
+            queryable = queryable.Where(predicate);
+
+        if (orderBy != null)
+            queryable = queryable.OrderByDescending(orderBy);
+
+        return await queryable
+            .Skip(skipCount)
+            .Take(maxResultCount)
+            .ToListAsync();
     }
-
-
-
-
-
-    /************************************************************************************************************/
-
-
-
-
-
-    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate = null)
+    public async Task<string> GetCodeAsync(Expression<Func<TEntity, string>> propertySelector,
+        Expression<Func<TEntity, bool>> predicate = null) // Örn: code = banka-0004
     {
-        throw new NotImplementedException();
+        static string CreateNewCode(string code) 
+        {
+            var number = "";
+
+            foreach (var character in code) // Gelen string içinde karakter karakter gezinir ve sayısal veri olanı number içine atar. banka-004ü 004 olarak alır number'a atar.
+            { 
+                if (char.IsDigit(character))
+                    number += character;
+                else
+                    number = "";
+            }
+
+            var newNumber = number == "" ? "1" : (long.Parse(number) + 1).ToString(); // numberı 1 arttırdıktan sonra başına char karakterleri eklemek için geri stringe çeviriyoruz.
+            var difference = code.Length - newNumber.Length;
+            if(difference < 0)
+                difference = 0; // farkı 0dan küçükse 0 a eşitledik çünkü 999dan 1000e geçince fark -1 e düşüp hata vermemesi lazım. 
+
+            var newCode = code.Substring(0, difference);
+            newCode += newNumber;
+
+            return newCode;
+        }
+
+        var dbSet = await GetDbSetAsync(); // dbSet'e atanan Entity içinde sorgu yapmamızı sağlar.
+        var maxCode = predicate == null ?
+            await dbSet.MaxAsync(propertySelector) : // Eğer predicatein içinde bir filtre yoksa propertySelector ile entity'nin hanig propertysini gönderdiysek onun içinde max değeri getirir.
+            await dbSet.Where(predicate).MaxAsync(propertySelector); // Önce predicate filtresini uygular daha sonra elde edilen propertynin max değerini alır.
+        return maxCode == null ? "0000000000000001" : CreateNewCode(maxCode);
     }
-    public Task<IList<TEntity>> FromSqlRawAsync(string sql, params object[] parameters)
+    public async Task<IList<TEntity>> FromSqlRawAsync(string sql, params object[] parameters)
     {
-        throw new NotImplementedException();
+        var context = await GetDbContextAsync();
+        return await context.Set<TEntity>().FromSqlRaw(sql, parameters).ToListAsync();
     }
-
-
-
-
-
-
-    public Task<string> GetCodeAsync(Expression<Func<TEntity, string>> propertySelector, Expression<Func<TEntity, bool>> predicate = null)
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate = null)
     {
-        throw new NotImplementedException();
+        var dbSet = await GetDbSetAsync();
+        return predicate == null ? await dbSet.AnyAsync() : await dbSet.AnyAsync(predicate);
     }
+
+
+
+
+
+
+
 
 
 
