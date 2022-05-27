@@ -9,6 +9,7 @@ using Loyka.OnMuhasebe.Kasalar;
 using Loyka.OnMuhasebe.Makbuzlar;
 using Loyka.OnMuhasebe.OzelKodlar;
 using Loyka.OnMuhasebe.Parametreler;
+using Loyka.OnMuhasebe.Subeler;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;

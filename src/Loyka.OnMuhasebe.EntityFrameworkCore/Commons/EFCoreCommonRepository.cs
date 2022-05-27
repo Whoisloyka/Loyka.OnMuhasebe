@@ -12,10 +12,10 @@ using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace Loyka.OnMuhasebe.Commons;
-public class EFCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbContext, TEntity, Guid>,
+public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbContext, TEntity, Guid>,
     ICommonRepository<TEntity> where TEntity : class, IEntity<Guid>
 {
-    public EFCoreCommonRepository(IDbContextProvider<OnMuhasebeDbContext> dbContextProvider) : base(dbContextProvider)
+    public EfCoreCommonRepository(IDbContextProvider<OnMuhasebeDbContext> dbContextProvider) : base(dbContextProvider)
     {
     }
 
@@ -112,6 +112,7 @@ public class EFCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
     public async Task<string> GetCodeAsync(Expression<Func<TEntity, string>> propertySelector,
         Expression<Func<TEntity, bool>> predicate = null) // Örn: code = banka-0004
     {
+        // Yeni oluşturulacak olan kartın aktif/pasif durumuna ve şubesine göre yeni kod oluşturur. 
         static string CreateNewCode(string code) 
         {
             var number = "";

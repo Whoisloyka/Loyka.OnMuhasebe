@@ -1,6 +1,4 @@
-﻿
-
-namespace Loyka.OnMuhasebe.Subeler;
+﻿namespace Loyka.OnMuhasebe.Subeler;
 public class Sube : FullAuditedAggregateRoot<Guid>
 {
     public string Kod { get; set; }

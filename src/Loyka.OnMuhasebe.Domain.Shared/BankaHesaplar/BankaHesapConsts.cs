@@ -1,4 +1,4 @@
-﻿namespace AbcYazilim.OnMuhasebe.BankaHesaplar;
+﻿namespace Loyka.OnMuhasebe.BankaHesaplar;
 
 public static class BankaHesapConsts
 {

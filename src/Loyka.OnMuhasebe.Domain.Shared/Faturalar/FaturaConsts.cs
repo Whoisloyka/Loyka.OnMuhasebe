@@ -1,4 +1,4 @@
-﻿namespace AbcYazilim.OnMuhasebe.Faturalar;
+﻿namespace Loyka.OnMuhasebe.Faturalar;
 
 public static class FaturaConsts
 {

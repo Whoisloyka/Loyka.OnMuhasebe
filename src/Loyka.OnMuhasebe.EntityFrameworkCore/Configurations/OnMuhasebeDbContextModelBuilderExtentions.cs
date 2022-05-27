@@ -1,21 +1,19 @@
 ﻿using System.Data;
-using AbcYazilim.OnMuhasebe.BankaHesaplar;
-using AbcYazilim.OnMuhasebe.Cariler;
-using AbcYazilim.OnMuhasebe.Faturalar;
-using AbcYazilim.OnMuhasebe.MakbuzHareketler;
-using AbcYazilim.OnMuhasebe.Makbuzlar;
 using Loyka.OnMuhasebe.BankaHesaplar;
+using Loyka.OnMuhasebe.Cariler;
+using Loyka.OnMuhasebe.Faturalar;
+using Loyka.OnMuhasebe.MakbuzHareketler;
+using Loyka.OnMuhasebe.Makbuzlar;
 using Loyka.OnMuhasebe.Bankalar;
 using Loyka.OnMuhasebe.BankaSubeler;
 using Loyka.OnMuhasebe.Consts;
-using Loyka.OnMuhasebe.Faturalar;
 using Loyka.OnMuhasebe.Hizmetler;
 using Loyka.OnMuhasebe.Kasalar;
-using Loyka.OnMuhasebe.Makbuzlar;
 using Loyka.OnMuhasebe.OzelKodlar;
 using Loyka.OnMuhasebe.Parametreler;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Modeling;
+using Loyka.OnMuhasebe.Subeler;
 
 namespace Loyka.OnMuhasebe.Configurations;
 public static class OnMuhasebeDbContextModelBuilderExtentions

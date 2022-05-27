@@ -1,4 +1,4 @@
-﻿namespace AbcYazilim.OnMuhasebe.Cariler;
+﻿namespace Loyka.OnMuhasebe.Cariler;
 
 public static class CariConsts
 {

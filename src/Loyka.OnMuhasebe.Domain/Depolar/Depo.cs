@@ -1,4 +1,6 @@
-﻿namespace Loyka.OnMuhasebe.BankaSubeler;
+﻿
+
+namespace Loyka.OnMuhasebe.BankaSubeler;
 public class Depo : FullAuditedAggregateRoot<Guid>
 {
     public string Kod { get; set; }

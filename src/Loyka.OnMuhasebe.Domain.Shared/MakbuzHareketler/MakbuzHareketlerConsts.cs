@@ -1,4 +1,4 @@
-﻿namespace AbcYazilim.OnMuhasebe.MakbuzHareketler;
+﻿namespace Loyka.OnMuhasebe.MakbuzHareketler;
 
 public static class MakbuzHareketConsts
 {
