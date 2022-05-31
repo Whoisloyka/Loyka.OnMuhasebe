@@ -17,7 +17,6 @@ using Loyka.OnMuhasebe.Masraflar;
 using Loyka.OnMuhasebe.OdemeBelgeleri;
 using Loyka.OnMuhasebe.OzelKodlar;
 using Loyka.OnMuhasebe.Parametreler;
-using Loyka.OnMuhasebe.Raporlar;
 using Loyka.OnMuhasebe.Stoklar;
 using Loyka.OnMuhasebe.Subeler;
 using Microsoft.EntityFrameworkCore;
