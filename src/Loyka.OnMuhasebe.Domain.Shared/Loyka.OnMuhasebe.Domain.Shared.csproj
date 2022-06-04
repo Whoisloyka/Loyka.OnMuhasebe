@@ -21,7 +21,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Localization\OnMuhasebe\*.json" />
+    <Compile Remove="NewFolder\**" />
     <Content Remove="Localization\OnMuhasebe\*.json" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
