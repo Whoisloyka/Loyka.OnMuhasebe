@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Loyka.OnMuhasebe.MakbuzHareketler;
 using Volo.Abp.Application.Dtos;
 
 namespace Loyka.OnMuhasebe.BankaHesaplar;
@@ -23,6 +24,10 @@ public class ListBankaHesapDto : EntityDto<Guid>
     public decimal BorcBakiye => Borc - Alacak > 0 ? Borc - Alacak : 0;
     public decimal AlacakBakiye => Alacak - Borc > 0 ? Alacak - Borc : 0;
     public string Aciklama { get; set; }
+
+
+
+    public ICollection<SelectMakbuzHareketDto> MakbuzHareketler { get; set; }
 
 
     // public bool Durum { get; set; } // zaten true olanları listeleyeceğimiz için Durum'u göstermeye gerek yok.

@@ -11,9 +11,11 @@ namespace Loyka.OnMuhasebe.BankaSubeler;
 public class BankaSubeAppService : OnMuhasebeAppService, IBankaSubeAppService
 {
     private readonly IBankaSubeRepository _bankaSubeRepository;
-    public BankaSubeAppService(IBankaSubeRepository bankaSubeRepository)
+    private readonly BankaSubeManager _bankaSubeManager; // create, update ve delete içinde kullanacağız.
+    public BankaSubeAppService(IBankaSubeRepository bankaSubeRepository, BankaSubeManager bankaSubeManager)
     {
         _bankaSubeRepository = bankaSubeRepository;
+        _bankaSubeManager = bankaSubeManager;
     }
 
 
@@ -42,6 +44,9 @@ public class BankaSubeAppService : OnMuhasebeAppService, IBankaSubeAppService
     }
     public virtual async Task<SelectBankaSubeDto> CreateAsync(CreateBankaSubeDto input)
     {
+        // kontrol yapıyoruz. Bu bir validasyon kontrolu değil!! Sadece yeni kayıt yaparken o kod veya özel kod ile daha önce kayıt açılmış mı ona bakıyoruz. Var olan özelliklerle başka bir kayıt açılmasın diye.
+        await _bankaSubeManager.CheckCreateAsync(input.Kod, input.BankaId, input.OzelKod1Id, input.OzelKod2Id);
+        
         var entity = ObjectMapper.Map<CreateBankaSubeDto, BankaSube>(input);
 
         await _bankaSubeRepository.InsertAsync(entity);// Maplediğimiz entityi DB'ye kaydediyoruz.
@@ -51,6 +56,10 @@ public class BankaSubeAppService : OnMuhasebeAppService, IBankaSubeAppService
     public virtual async Task<SelectBankaSubeDto> UpdateAsync(Guid id, UpdateBankaSubeDto input)
     {
         var entity = await _bankaSubeRepository.GetAsync(id, bs => bs.Id == id);
+
+        await _bankaSubeManager.CheckUpdateAsync(id, entity.Kod, entity, entity.OzelKod1Id, entity.OzelKod2Id);
+
+
         var mappedEntity = ObjectMapper.Map(input, entity);
 
         await _bankaSubeRepository.UpdateAsync(mappedEntity);
@@ -64,6 +73,8 @@ public class BankaSubeAppService : OnMuhasebeAppService, IBankaSubeAppService
     }
     public virtual async Task DeleteAsync(Guid id)
     {
+        await _bankaSubeManager.CheckDeleteAsync(id);
+
         await _bankaSubeRepository.DeleteAsync(id);
     }
 

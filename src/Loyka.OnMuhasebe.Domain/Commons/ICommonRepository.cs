@@ -28,9 +28,9 @@ public interface ICommonRepository<TEntity> : IRepository<TEntity,Guid>
     /************Veri Sayfada Listelemek için  Oluşturulan Functionlar****************/
     /* skipCount = kaç adet veri atlanarak alınacak
      * maxResultCount = Kaç adet veri getirilecek */
-    Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount,
+    Task<List<TEntity>> GetPagedListAsync<TKey>(int skipCount, int maxResultCount,
         Expression<Func<TEntity, bool>> predicate = null,
-        Expression<Func<TEntity, IKey>> orderBy = null,
+        Expression<Func<TEntity, TKey>> orderBy = null,
         params Expression<Func<TEntity, object>>[] includeProperties);
 
     Task<List<TEntity>> GetPagedLastListAsync<TKey>(int skipCount, int maxResultCount,
