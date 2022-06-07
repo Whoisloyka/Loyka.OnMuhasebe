@@ -31,8 +31,6 @@ public static class EntityAsyncExtentions
         }
     }
 
-
-
     public static async Task EntityAnyAsync(this IReadOnlyRepository<OzelKod> repository,
         Guid? id, OzelKodTuru kodTuru, KartTuru kartTuru,bool check=true)
     {

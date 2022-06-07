@@ -41,6 +41,6 @@ public class BankaManager : DomainService
     {
         await _bankaRepository.RelationalEntityAsync(
             x=>x.BankaSubeler.Any(y=>y.BankaId == id) ||
-                x.MakbuzHareketler.Any(y => y.CekBankaId == id));
+            x.MakbuzHareketler.Any(y => y.CekBankaId == id));
     }
 }

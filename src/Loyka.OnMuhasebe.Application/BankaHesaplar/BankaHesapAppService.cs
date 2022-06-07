@@ -7,14 +7,18 @@ using Loyka.OnMuhasebe.Makbuzlar;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 
 namespace Loyka.OnMuhasebe.BankaHesaplar;
 public class BankaHesapAppService : OnMuhasebeAppService, IBankaHesapAppService
 {
     private readonly IBankaHesapRepository _bankaHesapRepository;
-    public BankaHesapAppService(IBankaHesapRepository bankaHesapRepository)
+    private readonly BankaHesapManager _bankaHesapManager;
+    public BankaHesapAppService(IBankaHesapRepository bankaHesapRepository,
+        BankaHesapManager bankaHesapManager)
     {
         _bankaHesapRepository = bankaHesapRepository;
+        _bankaHesapManager = bankaHesapManager;
     }
 
     public virtual async Task<SelectBankaHesapDto> GetAsync(Guid id)
@@ -28,6 +32,7 @@ public class BankaHesapAppService : OnMuhasebeAppService, IBankaHesapAppService
 
 
         var mappedDto = ObjectMapper.Map<BankaHesap, SelectBankaHesapDto>(entity);
+        // Hesap Turu Adı'nı mappleyemiyoruz fakat burda mappledikten sonra otomakit çekebiliyoruz. Her dilde gelecek şekilde. Localization!!!
         mappedDto.HesapTuruAdi = L[$"Enum:BankaHesapTuru:{(byte)mappedDto.HesapTuru}"];
 
         return mappedDto;
@@ -51,7 +56,7 @@ public class BankaHesapAppService : OnMuhasebeAppService, IBankaHesapAppService
         var mappedDtos = ObjectMapper.Map<List<BankaHesap>, List<ListBankaHesapDto>>(entities);
 
         mappedDtos.ForEach(x =>
-        {
+        {   // Hesap Turu Adı'nı mappleyemiyoruz fakat burda mappledikten sonra otomakit çekebiliyoruz. Her dilde gelecek şekilde.
             x.HesapTuruAdi = L[$"Enum:BankaHesapTuru:{(byte)x.HesapTuru}"];
             x.Borc = x.MakbuzHareketler.Where(y => y.BelgeDurumu == BelgeDurumu.TahsisEdildi ||
                      y.OdemeTuru == OdemeTuru.Pos && y.BelgeDurumu == BelgeDurumu.Portfoyde)
@@ -63,39 +68,42 @@ public class BankaHesapAppService : OnMuhasebeAppService, IBankaHesapAppService
 
         return new PagedResultDto<ListBankaHesapDto>(totalCount, mappedDtos);
     }
-
-
-
-
-
-
     public virtual async Task<SelectBankaHesapDto> CreateAsync(CreateBankaHesapDto input)
     {
-
+        await _bankaHesapManager.CheckCreateAsync(input.Kod, input.BankaSubeId,
+            input.OzelKod1Id, input.OzelKod2Id, input.SubeId);
 
         var entity = ObjectMapper.Map<CreateBankaHesapDto, BankaHesap>(input);
 
         await _bankaHesapRepository.InsertAsync(entity);
         return ObjectMapper.Map<BankaHesap, SelectBankaHesapDto>(entity);
     }
-
-    public virtual async Task DeleteAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-
-
-    public virtual async Task<string> GetCodeAsync(BankaHesapCodeParameterDto input)
-    {
-        throw new NotImplementedException();
-    }
-
-
     public virtual async Task<SelectBankaHesapDto> UpdateAsync(Guid id, UpdateBankaHesapDto input)
     {
-        throw new NotImplementedException();
+        // update işleminde bir entity getirip update edeceğimiz için önce entityi çekiyoruz.
+        var entity = await _bankaHesapRepository.GetAsync(id, x => x.Id == id);
+
+        await _bankaHesapManager.CheckUpdateAsync(id, input.Kod, entity, input.BankaSubeId, input.OzelKod1Id, input.OzelKod2Id);
+
+        var mappedEntity = ObjectMapper.Map(input, entity);
+
+        await _bankaHesapRepository.UpdateAsync(mappedEntity);
+
+        return ObjectMapper.Map<BankaHesap, SelectBankaHesapDto>(mappedEntity);
     }
+    public virtual async Task DeleteAsync(Guid id)
+    {
+        await _bankaHesapManager.CheckDeleteAsync(id); 
+        await _bankaHesapRepository.DeleteAsync(id);
+    }
+    public virtual async Task<string> GetCodeAsync(BankaHesapCodeParameterDto input)
+    {
+        return await _bankaHesapRepository.GetCodeAsync(x => x.Kod,
+            x => x.SubeId == input.SubeId && x.Durum == input.Durum);
+    }
+
+
+
 
     Task<ListBankaHesapDto> IReadOnlyAppService<ListBankaHesapDto, ListBankaHesapDto, Guid, BankaHesapListParameterDto>.GetAsync(Guid id)
     {

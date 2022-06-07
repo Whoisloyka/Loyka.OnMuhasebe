@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Loyka.OnMuhasebe.BankaHesaplar;
 using Loyka.OnMuhasebe.Bankalar;
 using Loyka.OnMuhasebe.BankaSubeler;
 
@@ -15,6 +16,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 
         // Yaptığımız tüm maplemeleri buraya ekliyoruz.
 
+
         // Banka
         CreateMap<Banka, SelectBankaDto>()
             .ForMember(x=>x.OzelKod1Adi,y=>y.MapFrom(z=>z.OzelKod1.Ad)) //navigation propertyleri getiriyor. İlgili alanları mapleryip dolduruyor.
@@ -24,6 +26,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
             .ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
         CreateMap<CreateBankaDto, Banka>();
         CreateMap<UpdateBankaDto, Banka>();
+
 
         // BankaSube
         CreateMap<BankaSube, SelectBankaSubeDto>()
@@ -38,6 +41,20 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 
         CreateMap<CreateBankaSubeDto, BankaSube>();
         CreateMap<UpdateBankaSubeDto, BankaSube>();
+
+
+        // BankaHesap
+        CreateMap<BankaHesap, SelectBankaHesapDto>()
+            .ForMember(x => x.BankaId, y => y.MapFrom(z => z.BankaSube.BankaId))
+            .ForMember(x => x.BankaAdi, y => y.MapFrom(z => z.BankaSube.Banka.Ad))// MapFrom'dan sonrası navigation properties.
+            .ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+            .ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+        CreateMap<BankaHesap, ListBankaHesapDto>()
+            .ForMember(x => x.BankaAdi, y => y.MapFrom(z => z.BankaSube.Banka.Ad))
+            .ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+            .ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+        CreateMap<CreateBankaHesapDto, BankaHesap>();
+        CreateMap<UpdateBankaHesapDto, BankaHesap>();
 
 
     }

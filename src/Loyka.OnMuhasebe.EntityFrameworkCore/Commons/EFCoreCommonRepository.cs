@@ -153,14 +153,8 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
         return predicate == null ? await dbSet.AnyAsync() : await dbSet.AnyAsync(predicate);
     }
 
-
-
-
-
-
-
-
-
-
-
+    public Task<List<TEntity>> GetPagedListAsync<TKey>(int skipCount, int maxResultCount, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, TKey>> orderBy = null, params Expression<Func<TEntity, object>>[] includeProperties)
+    {
+        throw new NotImplementedException();
+    }
 }
