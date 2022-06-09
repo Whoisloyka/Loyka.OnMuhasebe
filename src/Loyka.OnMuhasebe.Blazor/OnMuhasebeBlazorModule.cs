@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http;
 using Blazorise.Bootstrap5;
@@ -121,9 +121,11 @@ public class OnMuhasebeBlazorModule : AbpModule
                 BlazorBasicThemeBundles.Styles.Global,
                 bundle =>
                 {
-                    bundle.AddFiles("/blazor-global-styles.css");
-                    //You can remove the following line if you don't use Blazor CSS isolation for components
+                    bundle.AddFiles("css/blazing_berry/bootstrap.min.css");
+                    bundle.AddFiles("css/site.css");
                     bundle.AddFiles("/Loyka.OnMuhasebe.Blazor.styles.css");
+                    bundle.AddFiles("/blazor-global-styles.css");
+                    bundle.AddFiles("_content/DevExpress.Blazor/dx-blazor.bs5.css");
                 }
             );
         });
