@@ -30,7 +30,7 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
     }
     public virtual async Task<PagedResultDto<ListBankaDto>> GetListAsync(BankaListParameterDto input)
     {
-        var entities = await _bankaRepository.GetPagedListAsync(input.SkipCount,
+        var entities = await _bankaRepository.GetPagedLastListAsync(input.SkipCount,
             input.MaxResultCount,
             b => b.Durum == input.Durum, // predicate
             b => b.Kod,// orderBy

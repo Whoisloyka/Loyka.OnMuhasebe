@@ -39,7 +39,7 @@ public class BankaHesapAppService : OnMuhasebeAppService, IBankaHesapAppService
     }
     public virtual async Task<PagedResultDto<ListBankaHesapDto>> GetListAsync(BankaHesapListParameterDto input)
     {
-        var entities = await _bankaHesapRepository.GetPagedListAsync(input.SkipCount, input.MaxResultCount,
+        var entities = await _bankaHesapRepository.GetPagedLastListAsync(input.SkipCount, input.MaxResultCount,
             x => input.HesapTuru == null ? x.SubeId == input.SubeId && 
             x.Durum == input.Durum : x.HesapTuru == input.HesapTuru && // bazen hesap türü göre listeleme isteyeceğiz. Bu sorgu bize onu sağlayacak.
             x.SubeId == input.SubeId && x.Durum == input.Durum,

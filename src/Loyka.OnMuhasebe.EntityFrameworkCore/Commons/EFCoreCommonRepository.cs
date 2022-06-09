@@ -153,7 +153,10 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
         return predicate == null ? await dbSet.AnyAsync() : await dbSet.AnyAsync(predicate);
     }
 
-    public async Task<List<TEntity>> GetPagedListAsync<TKey>(int skipCount, int maxResultCount, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, TKey>> orderBy = null, params Expression<Func<TEntity, object>>[] includeProperties)
+    public async Task<List<TEntity>> GetPagedListAsync<TKey>(int skipCount, int maxResultCount,
+        Expression<Func<TEntity, bool>> predicate = null,
+        Expression<Func<TEntity, TKey>> orderBy = null,
+        params Expression<Func<TEntity, object>>[] includeProperties)
     {
         var queryable = await WithDetailsAsync(includeProperties);
 
@@ -161,7 +164,7 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
             queryable = queryable.Where(predicate);
 
         if (orderBy != null)
-            queryable = queryable.OrderBy(orderBy);
+            queryable = queryable.OrderByDescending(orderBy);
 
         return await queryable
             .Skip(skipCount)
